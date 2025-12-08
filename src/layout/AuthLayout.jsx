@@ -1,11 +1,11 @@
 import React from 'react';
 import Logo from '../../src/components/Logo/Logo.jsx';
-import { Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 
 const AuthLayout = () => {
     return (
         <div className='max-w-7xl mx-auto'>
-            <Logo></Logo>
+            <NavLink to=""><Logo></Logo></NavLink>
             <div className='flex'>
                 <div className='flex-1'>
                 <Outlet></Outlet>

@@ -8,7 +8,7 @@ const Logo = () => {
                 alt="logo"
                 className="w-12 h-12 rounded-xl object-cover"
             />
-<h3 className="text-3xl font-bold  text-amber-700">Xdecore</h3>
+<h3 className="text-3xl font-bold  text-amber-700">Xdecor</h3>
         </div>
     );
 };
