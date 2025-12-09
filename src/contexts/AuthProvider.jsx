@@ -12,40 +12,46 @@ import { auth } from '../firebase/firebase.init.js';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // <-- ADD THIS
 
   // Register new user
   const registerUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // Login existing user
+  // Login user
   const loginUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // Google Sign-In
+  // Google login
   const googleProvider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   // Logout
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
-  // Listen for auth state changes
+  // Listen for auth state
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);          // <-- VERY IMPORTANT
     });
 
-    return () => unsubscribe(); // cleanup
+    return () => unsubscribe();
   }, []);
 
-  // Context value
   const authInfo = {
     user,
+    loading,                     // <-- EXPOSE LOADING
     registerUser,
     loginUser,
     signInWithGoogle,
