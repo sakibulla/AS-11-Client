@@ -12,6 +12,9 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Services from "../pages/Services/Services";
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails";
 import BookingPage from "../pages/BookingPage/BookingPage"; // <-- new import
+import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -66,16 +69,30 @@ export const router = createBrowserRouter([
       <PrivateRoute>
         <DashboardLayout />
       </PrivateRoute>
+      
     ),
     children: [
       {
         path: "my-bookings",
         element: <MyBookings />,
+        
       },
       {
         path: "payment-history",
         element: <PaymentHistory />,
       },
+      {
+        path:'payment/:bookingId',
+        Component: Payment
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
+      },
+      {
+        path: 'payment-cancelled',
+        Component: PaymentCancelled
+      }
     ],
   },
 ]);

@@ -42,8 +42,8 @@ const MyBookings = () => {
             <p><strong>Date:</strong> {booking.bookingDate}</p>
             <p><strong>Location:</strong> {booking.location}</p>
             <p><strong>Status:</strong> {booking.status}</p>
-            <Link>
-            <button className='btn btn-primary'>Pay</button>
+             <Link to={`/dashboard/payment/${booking._id}`}>
+            <button  className='btn btn-primary'>Pay</button>
             </Link>
           </div>
         ))}
