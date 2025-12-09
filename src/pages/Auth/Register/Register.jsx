@@ -2,8 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
-import { updateProfile } from 'firebase/auth'; // Import updateProfile
-import { auth } from '../../../firebase/firebase.init'; // Your Firebase auth instance
+import { updateProfile } from 'firebase/auth';
+import { auth } from '../../../firebase/firebase.init';
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -17,7 +17,7 @@ const Register = () => {
 
       const profileImg = data.photo[0];
 
-      // 1️⃣ Register user
+      // 1️⃣ Register user in Firebase
       const result = await registerUser(data.email, data.password);
       const user = result.user;
       console.log('Registered user:', user);
@@ -33,7 +33,20 @@ const Register = () => {
       const photoURL = res.data.data.display_url;
       console.log('Uploaded image URL:', photoURL);
 
-      // 3️⃣ Update Firebase profile
+      // 3️⃣ Save user in backend database
+      const userInfo = {
+        email: data.email,
+        displayName: data.name,
+        photoURL: photoURL,
+        role: 'user'
+      };
+
+      const response = await axios.post('http://localhost:3000/users', userInfo); // direct POST
+      if (response.data.insertedId) {
+        console.log('User created in the database');
+      }
+
+      // 4️⃣ Update Firebase profile
       await updateProfile(auth.currentUser, {
         displayName: data.name,
         photoURL: photoURL
@@ -83,7 +96,7 @@ const Register = () => {
             <p className='text-red-500'>Password is required</p>
           )}
           {errors.password?.type === 'minLength' && (
-            <p className='text-red-500'>Password must be at least 6 characters or longer</p>
+            <p className='text-red-500'>Password must be at least 6 characters</p>
           )}
 
           <label className="label">Profile Photo</label>
