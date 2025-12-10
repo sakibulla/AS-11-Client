@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase v9 modular
 
-const PaymentHistory = ({ userEmail }) => {
+const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [userEmail, setUserEmail] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserEmail(user.email);
+      } else {
+        setError('User not logged in.');
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const fetchPayments = async () => {
+      if (!userEmail) return;
+
       try {
         setLoading(true);
-        const url = userEmail
-          ? `http://localhost:3000/payments?customerEmail=${encodeURIComponent(userEmail)}`
-          : `http://localhost:3000/payments`;
+        const url = `http://localhost:3000/payments?customerEmail=${encodeURIComponent(userEmail)}`;
         const res = await axios.get(url);
         setPayments(res.data);
       } catch (err) {
         console.error(err);
-        setError('Failed to fetch payment history');
+        setError('Failed to fetch payment history.');
       } finally {
         setLoading(false);
       }
@@ -28,7 +44,6 @@ const PaymentHistory = ({ userEmail }) => {
 
   if (loading) return <div>Loading payment history...</div>;
   if (error) return <div>{error}</div>;
-
   if (payments.length === 0) return <div>No payment history found.</div>;
 
   return (
@@ -55,7 +70,7 @@ const PaymentHistory = ({ userEmail }) => {
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>{payment.currency}</td>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>{payment.paymentStatus}</td>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {new Date(payment.paidAt).toLocaleString()}
+                {payment.paidAt ? new Date(payment.paidAt).toLocaleString() : '-'}
               </td>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>{payment.trackingId}</td>
             </tr>

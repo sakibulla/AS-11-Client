@@ -1,7 +1,10 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -47,7 +50,6 @@ const DashboardLayout = () => {
 
         <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
           <ul className="menu w-full grow">
-
             {/* Home */}
             <li>
               <NavLink
@@ -118,6 +120,99 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
+
+            {/* Admin Links */}
+            {role === 'admin' && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/approve-decorator"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Approve Decorator"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      fill="none"
+                      className="my-1.5 inline-block size-4"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                    <span className="is-drawer-close:hidden">Approve Decorator</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/add-services"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Add Services"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      fill="none"
+                      className="my-1.5 inline-block size-4"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                    <span className="is-drawer-close:hidden">Add Services</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Decorator Links */}
+            {role === 'admin' && (
+              <li>
+                <NavLink
+                  to="/dashboard/assign-decorator"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Assign Decorator"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    className="my-1.5 inline-block size-4"
+                  >
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span className="is-drawer-close:hidden">Assign Decorator</span>
+                </NavLink>
+              </li>
+            )}
+            {role === 'decorator' && (
+              <li>
+                <NavLink
+                  to="/dashboard/assigned-decorators"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Assigned Decorator"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    fill="none"
+                    className="my-1.5 inline-block size-4"
+                  >
+                    <path d="M12 5v14"></path>
+                    <path d="M5 12h14"></path>
+                  </svg>
+                  <span className="is-drawer-close:hidden">Assigned Decorator</span>
+                </NavLink>
+              </li>
+  )}
           </ul>
         </div>
       </div>

@@ -15,6 +15,15 @@ import BookingPage from "../pages/BookingPage/BookingPage"; // <-- new import
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
+import Decorator from "../pages/Decorator/Decorator";
+import ApproveDecorator from "../pages/Dashboard/Approvedecorator/ApproveDecorator";
+import AddService from "../pages/Dashboard/AddService/AddService";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import AdminRoute from "./AdminRoute";
+import AssignDecorator from "../pages/Dashboard/AssignDecorator/AssignDecorator";
+import DecoratorRoute from "./DecoratorRoute";
+import AssignedDecorator from "../pages/Dashboard/AssignedDecortor/AssignedDecortor";
+
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +33,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+       path: 'decorator',
+       element:<PrivateRoute><Decorator></Decorator></PrivateRoute>
       },
       {
         path: "coverage",
@@ -72,7 +85,14 @@ export const router = createBrowserRouter([
       
     ),
     children: [
+    {
+      index: true,      // 👈 default route
+      Component: MyProfile
+    },
+
+
       {
+
         path: "my-bookings",
         element: <MyBookings />,
         
@@ -92,6 +112,21 @@ export const router = createBrowserRouter([
       {
         path: 'payment-cancelled',
         Component: PaymentCancelled
+      },
+      {
+        path:'approve-decorator',
+        element: <AdminRoute><ApproveDecorator></ApproveDecorator></AdminRoute>
+      },{
+        path:'/dashboard/add-services',
+        element: <AdminRoute><AddService></AddService></AdminRoute>
+      },
+      {
+        path:'/dashboard/assign-decorator',
+        element: <AdminRoute><AssignDecorator></AssignDecorator></AdminRoute>
+      },
+      {
+        path:'assigned-decorators',
+        element: <DecoratorRoute><AssignedDecorator></AssignedDecorator>  </DecoratorRoute>
       }
     ],
   },
