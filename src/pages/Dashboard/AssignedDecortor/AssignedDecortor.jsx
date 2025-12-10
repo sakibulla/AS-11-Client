@@ -16,16 +16,18 @@ const AssignedDecorator = () => {
   const { user } = useAuth();
 
   // Fetch decorator info first
-  const decoratorIdQuery = useQuery({
-    queryKey: ['decoratorId', user?.email],
+  const decoratorQuery = useQuery({
+    queryKey: ['decorator', user?.email],
     queryFn: async () => {
       const res = await fetch(`http://localhost:3000/decorators?email=${user.email}`);
       const data = await res.json();
-      return data[0]?._id;
+      return data[0] || null;
     }
   });
 
-  const decoratorId = decoratorIdQuery.data;
+  const decorator = decoratorQuery.data;
+  const decoratorId = decorator?._id;
+  const earnings = decorator?.earnings || 0;
 
   // Fetch bookings assigned to this decorator
   const { data: bookings = [], refetch } = useQuery({
@@ -70,7 +72,8 @@ const AssignedDecorator = () => {
 
   return (
     <div>
-      <h2 className="text-4xl mb-4">My Assigned Bookings: {bookings.length}</h2>
+      <h2 className="text-4xl mb-2">My Assigned Bookings: {bookings.length}</h2>
+      <h3 className="text-2xl mb-4">Total Earnings: ${earnings.toFixed(2)}</h3>
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">

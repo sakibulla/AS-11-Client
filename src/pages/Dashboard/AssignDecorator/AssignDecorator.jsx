@@ -42,8 +42,17 @@ const AssignDecorator = () => {
 
       if (data.success) {
         toast.success(decoratorId === 'unassigned' ? 'Decorator unassigned' : 'Decorator assigned successfully');
+
         // Update UI immediately
-        setBookings(prev => prev.map(b => b._id === bookingId ? { ...b, assignedTo: decoratorId } : b));
+        setBookings(prev => prev.map(b => 
+          b._id === bookingId 
+            ? { 
+                ...b, 
+                assignedTo: decoratorId, 
+                bookingStatus: decoratorId && decoratorId !== 'unassigned' ? 'Decorator Assigned' : 'Pending' 
+              } 
+            : b
+        ));
       } else {
         toast.error(data.message || 'Failed to update assignment');
       }
@@ -53,14 +62,14 @@ const AssignDecorator = () => {
     }
   };
 
-  if (loading) return <div className="text-center p-6">Loading data...</div>;
-  if (bookings.length === 0) return <div className="text-center p-6">No bookings available.</div>;
-
   const getDecoratorName = (id) => {
     if (!id || id === 'unassigned') return 'Unassigned';
     const decorator = decorators.find(d => d._id === id);
     return decorator ? decorator.name : 'Unknown';
   };
+
+  if (loading) return <div className="text-center p-6">Loading data...</div>;
+  if (bookings.length === 0) return <div className="text-center p-6">No bookings available.</div>;
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -76,8 +85,8 @@ const AssignDecorator = () => {
             {/* Booking Status */}
             <p>
               <strong>Booking Status:</strong>{' '}
-              <span className={booking.assignedTo && booking.assignedTo !== 'unassigned' ? 'text-green-600' : 'text-yellow-600'}>
-                {booking.assignedTo && booking.assignedTo !== 'unassigned' ? 'Decorator Assigned' : 'Pending'}
+              <span className={booking.bookingStatus === 'Decorator Assigned' ? 'text-green-600' : 'text-yellow-600'}>
+                {booking.bookingStatus}
               </span>
             </p>
 
