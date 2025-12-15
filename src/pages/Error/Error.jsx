@@ -9,7 +9,7 @@ const ErrorPage = () => {
       
       <h1 className="text-[8rem] font-extrabold leading-none tracking-tight z-10">404</h1>
       <p className="text-xl md:text-2xl font-light mb-6 text-gray-300 z-10">
-        Oops! The page you’re looking for doesn’t exist.
+        Oops! The page you’re looking for doesn’t exist
       </p>
       <Link
         to="/"
