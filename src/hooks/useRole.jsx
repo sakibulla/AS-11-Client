@@ -8,7 +8,7 @@ const useRole = () => {
     queryKey: ["user-role", user?.email],
     enabled: !!user?.email, // Only run when email exists
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/users/${user?.email}/role`);
+      const res = await fetch(`https://xdecor.vercel.app/users/${user?.email}/role`);
       const data = await res.json();
       return data.role; // Extract only the role string
     },

@@ -22,7 +22,7 @@ const Payment = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:3000/create-checkout-session', {
+      const res = await fetch('https://xdecor.vercel.app/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(paymentInfo),
@@ -43,7 +43,7 @@ const Payment = () => {
   useEffect(() => {
     const fetchBooking = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/bookings/${bookingId}`);
+        const res = await fetch(`https://xdecor.vercel.app/bookings/${bookingId}`);
         const data = await res.json();
 
         if (data.success) {

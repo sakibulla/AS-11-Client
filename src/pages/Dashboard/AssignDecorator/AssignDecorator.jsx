@@ -9,13 +9,11 @@ const AssignDecorator = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch all bookings
-        const bookingsRes = await fetch('http://localhost:3000/bookings');
+        const bookingsRes = await fetch('https://xdecor.vercel.app/bookings');
         const bookingsData = await bookingsRes.json();
         setBookings(bookingsData);
 
-        // Fetch all decorators
-        const decoratorsRes = await fetch('http://localhost:3000/decorators');
+        const decoratorsRes = await fetch('https://xdecor.vercel.app/decorators');
         const decoratorsData = await decoratorsRes.json();
         setDecorators(decoratorsData);
 
@@ -30,10 +28,9 @@ const AssignDecorator = () => {
     fetchData();
   }, []);
 
-  // Assign/unassign decorator
   const handleAssign = async (bookingId, decoratorId) => {
     try {
-      const res = await fetch(`http://localhost:3000/bookings/${bookingId}/assign-decorator`, {
+      const res = await fetch(`https://xdecor.vercel.app/bookings/${bookingId}/assign-decorator`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assignedTo: decoratorId })
@@ -42,8 +39,6 @@ const AssignDecorator = () => {
 
       if (data.success) {
         toast.success(decoratorId === 'unassigned' ? 'Decorator unassigned' : 'Decorator assigned successfully');
-
-        // Update UI immediately
         setBookings(prev => prev.map(b => 
           b._id === bookingId 
             ? { 
@@ -68,41 +63,53 @@ const AssignDecorator = () => {
     return decorator ? decorator.name : 'Unknown';
   };
 
-  if (loading) return <div className="text-center p-6">Loading data...</div>;
-  if (bookings.length === 0) return <div className="text-center p-6">No bookings available.</div>;
+  if (loading) return <div className="text-center p-6 text-gray-500">Loading data...</div>;
+  if (bookings.length === 0) return <div className="text-center p-6 text-gray-500">No bookings available.</div>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Assign Decorators</h2>
-      <div className="space-y-4">
+    <div className="max-w-6xl mx-auto p-6">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">Assign Decorators</h2>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {bookings.map((booking) => (
-          <div key={booking._id} className="border p-4 rounded shadow-md flex flex-col gap-2">
-            <h3 className="text-xl font-semibold">{booking.serviceName}</h3>
-            <p><strong>Booked By:</strong> {booking.userName}</p>
-            <p><strong>Date:</strong> {booking.bookingDate}</p>
-            <p><strong>Location:</strong> {booking.location}</p>
+          <div
+            key={booking._id}
+            className="bg-white border border-gray-200 rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow duration-300"
+          >
+            <h3 className="text-xl font-semibold mb-2 text-gray-700">{booking.serviceName}</h3>
+            <p className="text-gray-600"><span className="font-medium">Booked By:</span> {booking.userName}</p>
+            <p className="text-gray-600"><span className="font-medium">Date:</span> {booking.bookingDate}</p>
+            <p className="text-gray-600"><span className="font-medium">Location:</span> {booking.location}</p>
 
             {/* Booking Status */}
-            <p>
-              <strong>Booking Status:</strong>{' '}
-              <span className={booking.bookingStatus === 'Decorator Assigned' ? 'text-green-600' : 'text-yellow-600'}>
+            <p className="mt-2">
+              <span className="font-medium">Booking Status:</span>{' '}
+              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${
+                booking.bookingStatus === 'Decorator Assigned' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-yellow-100 text-yellow-800'
+              }`}>
                 {booking.bookingStatus}
               </span>
             </p>
 
             {/* Payment Status */}
             <p>
-              <strong>Payment Status:</strong>{' '}
-              <span className={booking.status === 'paid' ? 'text-green-600' : 'text-red-600'}>
+              <span className="font-medium">Payment Status:</span>{' '}
+              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${
+                booking.status === 'paid'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
+              }`}>
                 {booking.status === 'paid' ? 'Paid' : 'Unpaid'}
               </span>
             </p>
 
-            <p><strong>Assigned To:</strong> {getDecoratorName(booking.assignedTo)}</p>
+            <p className="mt-2"><span className="font-medium">Assigned To:</span> {getDecoratorName(booking.assignedTo)}</p>
 
-            <div className="flex gap-2 items-center">
+            <div className="mt-4">
+              <label className="block text-gray-700 font-medium mb-1">Assign Decorator:</label>
               <select
-                className="border p-2 rounded"
+                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
                 value={booking.assignedTo || 'unassigned'}
                 onChange={(e) => handleAssign(booking._id, e.target.value)}
               >

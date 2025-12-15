@@ -23,6 +23,13 @@ import AdminRoute from "./AdminRoute";
 import AssignDecorator from "../pages/Dashboard/AssignDecorator/AssignDecorator";
 import DecoratorRoute from "./DecoratorRoute";
 import AssignedDecorator from "../pages/Dashboard/AssignedDecortor/AssignedDecortor";
+import Revenue from "../pages/Revenue/Revenue";
+import Demand from "../pages/Dashboard/Demand/Demand";
+import Todays from "../pages/Dashboard/Todays/Todays";
+import ErrorPage from "../pages/Error/Error";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
+import PublicRoute from "./PublicRoute";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +42,14 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+       path: 'about',
+       element: <About></About>
+      },
+      {
+       path: 'contact',
+       element:<Contact></Contact>
+      },
+      {
        path: 'decorator',
        element:<PrivateRoute><Decorator></Decorator></PrivateRoute>
       },
@@ -45,20 +60,20 @@ export const router = createBrowserRouter([
       {
         path: "services",
         element: <Services />,
-        loader: () => fetch("http://localhost:3000/services"),
+        loader: () => fetch("https://xdecor.vercel.app/services"),
       },
       {
         path: "services/:id",
         element: <ServiceDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/services/${params.id}`),
+          fetch(`https://xdecor.vercel.app/services/${params.id}`),
       },
       // Booking page route
       {
         path: "bookings/:serviceId",
-        element: <BookingPage />,
+        element: <PrivateRoute><BookingPage /></PrivateRoute>,
           loader: ({ params }) =>
-          fetch(`http://localhost:3000/services/${params.id}`)
+          fetch(`https://xdecor.vercel.app/services/${params.id}`)
       },
     ],
   },
@@ -66,14 +81,22 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AuthLayout />,
     children: [
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
+       {
+      path: "login",
+      element: (
+        <PublicRoute>
+          <Login />
+        </PublicRoute>
+      ),
+    },
+    {
+      path: "register",
+      element: (
+        <PublicRoute>
+          <Register />
+        </PublicRoute>
+      ),
+    },
     ],
   },
   {
@@ -125,9 +148,24 @@ export const router = createBrowserRouter([
         element: <AdminRoute><AssignDecorator></AssignDecorator></AdminRoute>
       },
       {
+        path:'/dashboard/revenue',
+        element: <AdminRoute><Revenue></Revenue></AdminRoute>
+      },
+            {
+        path:'/dashboard/demand',
+        element: <AdminRoute><Demand></Demand></AdminRoute>
+      },
+      {
         path:'assigned-decorators',
         element: <DecoratorRoute><AssignedDecorator></AssignedDecorator>  </DecoratorRoute>
+      },
+      {
+        path:'todays',
+        element: <DecoratorRoute><Todays></Todays></DecoratorRoute>
       }
     ],
+  },  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);

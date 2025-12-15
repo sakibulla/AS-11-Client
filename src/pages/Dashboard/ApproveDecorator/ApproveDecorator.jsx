@@ -11,7 +11,7 @@ const ApproveDecorator = () => {
     const { refetch, data: decorators = [] } = useQuery({
         queryKey: ['decorators', 'pending'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:3000/decorators');
+            const res = await fetch('https://xdecor.vercel.app/decorators');
             if (!res.ok) throw new Error('Failed to fetch decorators');
             return res.json();
         }
@@ -29,7 +29,7 @@ const handleDelete = async (decorator) => {
   if (!confirm.isConfirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:3000/decorators/${decorator._id}`, {
+    const res = await fetch(`https://xdecor.vercel.app/decorators/${decorator._id}`, {
       method: 'DELETE',
     });
     const data = await res.json();
@@ -60,7 +60,7 @@ const handleDelete = async (decorator) => {
     const updateDecoratorStatus = async (decorator, status) => {
         const updateInfo = { status, email: decorator.email };
 
-        const res = await fetch(`http://localhost:3000/decorators/${decorator._id}`, {
+        const res = await fetch(`https://xdecor.vercel.app/decorators/${decorator._id}`, {
             method: "PATCH",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updateInfo)

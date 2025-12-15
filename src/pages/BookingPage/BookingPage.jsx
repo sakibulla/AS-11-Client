@@ -11,13 +11,14 @@ const BookingPage = () => {
   const [service, setService] = useState(null);
   const [bookingDate, setBookingDate] = useState('');
   const [location, setLocation] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // loading for fetching service
+  const [bookingLoading, setBookingLoading] = useState(false); // loading for booking submission
 
-  // Fetch service details from backend
+  // Fetch service details
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/services/${serviceId}`);
+        const res = await fetch(`https://xdecor.vercel.app/services/${serviceId}`);
         const data = await res.json();
         setService(data.result || data); // handle backend response
       } catch (err) {
@@ -51,10 +52,10 @@ const BookingPage = () => {
       assignedTo: "unassigned",
     };
 
-    console.log("Booking Data Sent:", bookingData);
-
     try {
-      const response = await fetch('http://localhost:3000/bookings', {
+      setBookingLoading(true);
+
+      const response = await fetch('https://xdecor.vercel.app/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingData),
@@ -62,15 +63,18 @@ const BookingPage = () => {
 
       const result = await response.json();
 
-      if (response.ok && result.insertedId) {
+      // ✅ Corrected success check
+      if (response.ok) {
         toast.success("Booking successful!");
-        navigate('/dashboard/my-bookings');
+        navigate('/'); // redirect to home
       } else {
-        toast.error(result.error || "Failed to book service");
+        toast.error(result?.error || "Failed to book service");
       }
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong!");
+    } finally {
+      setBookingLoading(false);
     }
   };
 
@@ -128,6 +132,7 @@ const BookingPage = () => {
           onChange={(e) => setBookingDate(e.target.value)}
           required
           className="border p-2 rounded w-full"
+          disabled={bookingLoading}
         />
         <input
           type="text"
@@ -136,13 +141,21 @@ const BookingPage = () => {
           required
           placeholder="Location"
           className="border p-2 rounded w-full"
+          disabled={bookingLoading}
         />
 
+        {/* Confirm Booking Button */}
         <button
           type="submit"
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center justify-center gap-2"
+          disabled={bookingLoading}
         >
-          Confirm Booking
+          {bookingLoading ? (
+            <>
+              <span className="loading loading-spinner loading-sm"></span>
+              <span>Booking...</span>
+            </>
+          ) : 'Confirm Booking'}
         </button>
       </form>
     </div>

@@ -44,7 +44,7 @@ const Banner = () => {
                     Premium Home & Ceremony Decoration Services
                 </motion.p>
                 <motion.a
-                    href="#booking"
+                    href="/services"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-[#F7C08A] text-white font-semibold py-3 px-6 md:py-4 md:px-8 rounded-xl shadow-lg hover:bg-[#E6A56F] transition-colors duration-300"

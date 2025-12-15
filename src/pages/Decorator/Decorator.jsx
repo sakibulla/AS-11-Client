@@ -38,7 +38,7 @@ const Decorator = () => {
       };
 
       // Replace with your backend endpoint
-      await axios.post('http://localhost:3000/decorator', applicationData);
+      await axios.post('https://xdecor.vercel.app/decorator', applicationData);
 
       setSuccess('Application submitted successfully!');
     } catch (err) {

@@ -13,7 +13,7 @@ const PaymentSuccess = () => {
 
         const updatePayment = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/payment-success?session_id=${sessionId}`, {
+                const res = await fetch(`https://xdecor.vercel.app/payment-success?session_id=${sessionId}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                 });

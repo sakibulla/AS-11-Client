@@ -6,19 +6,29 @@ import './index.css'
 import { router } from './routes/router.jsx';
 import AuthProvider from './contexts/AuthProvider.jsx';
 import {
-  QueryClientProvider,QueryClient
+  QueryClientProvider, QueryClient
 } from '@tanstack/react-query'
-const queryClient = new QueryClient()
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      
- <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        {/* ToastContainer added here so all pages can use toast */}
         <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+        />
       </AuthProvider>
-      </QueryClientProvider>
-
+    </QueryClientProvider>
   </StrictMode>,
 )

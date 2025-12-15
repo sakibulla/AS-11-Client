@@ -11,7 +11,7 @@ const MyProfile = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/users/${user.email}`)
+    fetch(`https://xdecor.vercel.app/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data.user);
@@ -51,7 +51,7 @@ const MyProfile = () => {
       photoURL: profile.photoURL,
     };
 
-    await fetch(`http://localhost:3000/users/${user.email}`, {
+    await fetch(`https://xdecor.vercel.app/users/${user.email}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateData),

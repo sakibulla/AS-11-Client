@@ -19,7 +19,7 @@ const AssignedDecorator = () => {
   const decoratorQuery = useQuery({
     queryKey: ['decorator', user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/decorators?email=${user.email}`);
+      const res = await fetch(`https://xdecor.vercel.app/decorators?email=${user.email}`);
       const data = await res.json();
       return data[0] || null;
     }
@@ -34,7 +34,7 @@ const AssignedDecorator = () => {
     queryKey: ['bookings', decoratorId],
     enabled: !!decoratorId,
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/bookings/decorator/${decoratorId}`);
+      const res = await fetch(`https://xdecor.vercel.app/bookings/decorator/${decoratorId}`);
       if (!res.ok) throw new Error('Failed to fetch bookings');
       return res.json();
     }
@@ -44,7 +44,7 @@ const AssignedDecorator = () => {
     if (currentStatus === newStatus) return; // Prevent unnecessary update
 
     try {
-      const res = await fetch(`http://localhost:3000/bookings/${bookingId}/status`, {
+      const res = await fetch(`https://xdecor.vercel.app/bookings/${bookingId}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingStatus: newStatus })
