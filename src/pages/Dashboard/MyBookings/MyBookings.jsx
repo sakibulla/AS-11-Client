@@ -111,7 +111,7 @@ const MyBookings = () => {
             <p><strong>Price:</strong> ${booking.price}</p>
             <p><strong>Date:</strong> {booking.bookingDate}</p>
             <p><strong>Location:</strong> {booking.location}</p>
-            <p><strong>Status:</strong> {booking.status}</p>
+            <p><strong>Payment Status:</strong> {booking.status}</p>
             <p>
               <strong>Booking Status:</strong> 
               <span className={booking.bookingStatus === 'paid' ? 'text-green-600' : 'text-red-600'}>
