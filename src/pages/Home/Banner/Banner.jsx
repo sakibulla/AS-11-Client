@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const Banner = () => {
     return (
-        <div className="relative">
+        <div className="relative h-[60vh] w-full">
             <Carousel
                 autoPlay={true}
                 infiniteLoop={true}
@@ -13,15 +13,28 @@ const Banner = () => {
                 showThumbs={false}
                 showStatus={false}
                 showIndicators={false}
+                className="h-full"
             >
-                <div>
-                    <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyaminmellish-106399.jpg&fm=jpg" />
+                <div className="h-[60vh]">
+                    <img 
+                        src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyaminmellish-106399.jpg&fm=jpg" 
+                        className="h-[60vh] w-full object-cover"
+                        alt="Banner 1"
+                    />
                 </div>
-                <div>
-                    <img src="https://thumbs.dreamstime.com/b/beautiful-new-home-exterior-clear-evening-provides-setting-luxurious-34711767.jpg" />
+                <div className="h-[60vh]">
+                    <img 
+                        src="https://thumbs.dreamstime.com/b/beautiful-new-home-exterior-clear-evening-provides-setting-luxurious-34711767.jpg" 
+                        className="h-[60vh] w-full object-cover"
+                        alt="Banner 2"
+                    />
                 </div>
-                <div>
-                    <img src="https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4=" />
+                <div className="h-[60vh]">
+                    <img 
+                        src="https://media.istockphoto.com/id/1255835530/photo/modern-custom-suburban-home-exterior.jpg?s=612x612&w=0&k=20&c=0Dqjm3NunXjZtWVpsUvNKg2A4rK2gMvJ-827nb4AMU4=" 
+                        className="h-[60vh] w-full object-cover"
+                        alt="Banner 3"
+                    />
                 </div>
             </Carousel>
 

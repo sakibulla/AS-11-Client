@@ -1,18 +1,150 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100..900&family=Poppins:wght@100..900&display=swap');
 @import "tailwindcss";
-@plugin "daisyui"{
-  themes: light --default;
-};
+
+/* =========================
+   DaisyUI Configuration
+========================= */
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
+
+/* =========================
+   DaisyUI Theme Colors
+========================= */
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #C4A484;
-  --color-secondary: A89F91;
+  --color-secondary: #A89F91;
+  --color-accent: #F59E0B;
 }
 
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #7C3AED;
+  --color-secondary: #06B6D4;
+  --color-accent: #F59E0B;
+}
 
-body{
-  font-family: "Urbanist", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-} 
+/* =========================
+   Base Variables
+========================= */
+:root {
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+
+  --radius: 12px;
+  --btn-height: 40px;
+  --section-vertical: 3.5rem;
+
+  --card-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  --btn-shadow: 0 6px 14px rgba(124, 58, 237, 0.08);
+}
+
+/* =========================
+   Dark Mode Overrides
+========================= */
+[data-theme="dark"] {
+  --bg: #071026;
+  --text: #e6eef6;
+  --muted: #8fa5bf;
+  --card-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+}
+
+/* Ensure all text becomes light in dark mode (overrides utility classes) */
+[data-theme="dark"] body,
+[data-theme="dark"] body * {
+  color: var(--text) !important;
+}
+
+/* =========================
+   Global Styles
+========================= */
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", "Urbanist", sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   Utility Components
+========================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: var(--btn-height);
+  padding: 0 1rem;
+  border-radius: var(--radius);
+  border: 0;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: var(--btn-shadow);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+.btn-accent {
+  background: var(--color-accent);
+  color: #0b1220;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  box-shadow: none;
+}
+
+.card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.03);
+}
+
+.section {
+  padding: var(--section-vertical) 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* =========================
+   Responsive Tweaks
+========================= */
+@media (max-width: 640px) {
+  :root {
+    --section-vertical: 2rem;
+    --btn-height: 36px;
+  }
+}

@@ -98,7 +98,7 @@ const AddService = () => {
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6">
       {/* Form Card */}
-      <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
+      <div className=" p-6 rounded-xl shadow-lg mb-8">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">{editingId ? 'Edit Service' : 'Add Service'}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -157,7 +157,7 @@ const AddService = () => {
     {services.map((service) => (
       <div
         key={service._id}
-        className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+        className=" rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
       >
         <img src={service.image} alt={service.serviceName} className="w-full h-40 object-cover" />
         <div className="p-4 flex flex-col flex-1 justify-between">

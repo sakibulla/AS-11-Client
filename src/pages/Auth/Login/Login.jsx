@@ -4,13 +4,61 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import useAuth from '../../../hooks/useAuth';
 
+// Reusable Input Component
+const FormInput = ({ label, type, register, errors, disabled, validation }) => (
+  <div className="mb-3">
+    <label className="label">{label}</label>
+    <input
+      type={type}
+      {...register(label.toLowerCase(), validation)}
+      className="input input-bordered w-full"
+      placeholder={label}
+      disabled={disabled}
+    />
+    {errors[label.toLowerCase()] && (
+      <p className="text-red-500 text-sm mt-1">{errors[label.toLowerCase()].message}</p>
+    )}
+  </div>
+);
+
+// Demo Login Buttons
+const DemoLoginButtons = ({ setDemo }) => (
+  <div className="flex justify-between mb-3">
+    <button
+      type="button"
+      onClick={() => setDemo('user')}
+      className="btn btn-sm btn-outline w-[48%]"
+    >
+      Demo User
+    </button>
+    <button
+      type="button"
+      onClick={() => setDemo('admin')}
+      className="btn btn-sm btn-outline w-[48%]"
+    >
+      Demo Admin
+    </button>
+  </div>
+);
+
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const { loginUser, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
 
+  // Handle Demo login autofill
+  const handleDemoLogin = (type) => {
+    if (type === 'user') {
+      setValue('email', 'sakibulla20002@gmail.com');
+      setValue('password', 'sakibulla');
+    } else if (type === 'admin') {
+      setValue('email', 'hasanfahmid20002@gmail.com');
+      setValue('password', 'sakibulla');
+    }
+  };
+
+  // Login submit
   const handleLogin = (data) => {
     setLoading(true);
     loginUser(data.email, data.password)
@@ -21,11 +69,10 @@ const Login = () => {
       .catch(error => {
         toast.error(error.message || 'Login failed', { autoClose: 3000 });
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   };
 
+  // Google login
   const handleGoogleSignIn = () => {
     setLoading(true);
     signInWithGoogle()
@@ -36,14 +83,11 @@ const Login = () => {
       .catch(error => {
         toast.error(error.message || 'Google login failed', { autoClose: 3000 });
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   };
 
-  const goToRegister = () => {
-    if (!loading) navigate('/register');
-  };
+  // Navigate to register
+  const goToRegister = () => !loading && navigate('/register');
 
   return (
     <div className="flex justify-center items-center min-h-[50vh]">
@@ -52,46 +96,49 @@ const Login = () => {
 
           <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
 
+          {/* Demo Login Buttons */}
+          <DemoLoginButtons setDemo={handleDemoLogin} />
+
           {/* Email */}
-          <label className="label">Email</label>
-          <input
+          <FormInput
+            label="Email"
             type="email"
-            {...register('email', { required: true })}
-            className="input input-bordered"
-            placeholder="Email"
+            register={register}
+            errors={errors}
             disabled={loading}
+            validation={{
+              required: "Email is required",
+              pattern: {
+                value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                message: "Invalid email address"
+              }
+            }}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">Email is required</p>
-          )}
 
           {/* Password */}
-          <label className="label mt-3">Password</label>
-          <input
+          <FormInput
+            label="Password"
             type="password"
-            {...register('password', { required: true, minLength: 6 })}
-            className="input input-bordered"
-            placeholder="Password"
+            register={register}
+            errors={errors}
             disabled={loading}
+            validation={{
+              required: "Password is required",
+              minLength: { value: 6, message: "Password must be at least 6 characters" }
+            }}
           />
-          {errors.password?.type === 'required' && (
-            <p className="text-red-500 text-sm mt-1">Password is required</p>
-          )}
-          {errors.password?.type === 'minLength' && (
-            <p className="text-red-500 text-sm mt-1">
-              Password must be at least 6 characters
-            </p>
-          )}
 
           {/* Forgot Password */}
-          <div className="mt-2">
-            <a className="link link-hover text-sm">Forgot password?</a>
+          <div className="mb-3">
+            <a className="link link-hover text-sm" onClick={() => navigate('/forgot-password')}>
+              Forgot password?
+            </a>
           </div>
 
           {/* Login Button */}
           <button
             type="submit"
-            className="btn btn-neutral mt-4 w-full"
+            className="btn btn-neutral mt-2 w-full"
             disabled={loading}
           >
             {loading ? (

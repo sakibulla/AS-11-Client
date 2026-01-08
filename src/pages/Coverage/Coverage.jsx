@@ -8,7 +8,7 @@ const Coverage = () => {
   const position = [23, 90]; // Bangladesh center
 
   return (
-    <section className="w-full py-12 bg-gray-100">
+    <section className="w-full py-12 ">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-8">

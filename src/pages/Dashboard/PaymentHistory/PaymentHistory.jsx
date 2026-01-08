@@ -47,12 +47,12 @@ const PaymentHistory = () => {
   if (payments.length === 0) return <div className="text-center p-6 text-gray-500">No payment history found.</div>;
 
   return (
-    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+    <div className="max-w-6xl mx-auto mt-10 p-6  rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Payment History</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-200">
-          <thead className="bg-gray-100">
+          <thead className="">
             <tr>
               <th className="border px-4 py-2 text-left text-gray-700">Transaction ID</th>
               <th className="border px-4 py-2 text-left text-gray-700">Service Name</th>
@@ -67,7 +67,7 @@ const PaymentHistory = () => {
             {payments.map((payment, idx) => (
               <tr
                 key={payment._id}
-                className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                className={idx % 2 === 0 ? '' : ''}
               >
                 <td className="border px-4 py-2">{payment.transactionId}</td>
                 <td className="border px-4 py-2">{payment.parcelName}</td>

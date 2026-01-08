@@ -28,7 +28,7 @@ const Contact = () => {
         Have questions or want to book a service? Reach out to us and we will get back to you as soon as possible.
       </p>
 
-      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
+      <div className="max-w-2xl mx-auto  shadow-lg rounded-lg p-8">
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"

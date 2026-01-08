@@ -97,7 +97,7 @@ const AssignDecorator = () => {
         {bookings.map(booking => (
           <div
             key={booking._id}
-            className="bg-white border border-gray-200 rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow duration-300"
+            className=" border border-gray-200 rounded-xl shadow-md p-5 hover:shadow-lg transition-shadow duration-300"
           >
             <h3 className="text-xl font-semibold mb-2 text-gray-700">{booking.serviceName}</h3>
             <p className="text-gray-600"><span className="font-medium">Booked By:</span> {booking.userName}</p>
@@ -106,14 +106,14 @@ const AssignDecorator = () => {
 
             <p className="mt-2">
               <span className="font-medium">Booking Status:</span>{' '}
-              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${booking.bookingStatus === 'Decorator Assigned' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${booking.bookingStatus === 'Decorator Assigned' ? 'bg-green-500 text-green-800' : 'bg-yellow-500 text-yellow-800'}`}>
                 {booking.bookingStatus}
               </span>
             </p>
 
             <p>
               <span className="font-medium">Payment Status:</span>{' '}
-              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${booking.status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+              <span className={`px-2 py-1 rounded-full text-sm font-semibold ${booking.status === 'paid' ? 'bg-green-500 text-green-800' : 'bg-red-500 text-red-800'}`}>
                 {booking.status === 'paid' ? 'Paid' : 'Unpaid'}
               </span>
             </p>

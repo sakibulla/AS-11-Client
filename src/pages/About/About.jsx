@@ -10,21 +10,21 @@ const About = () => {
       </p>
 
       <div className="grid md:grid-cols-2 gap-10">
-        <div className="bg-white shadow-lg rounded-lg p-8">
+        <div className=" shadow-lg rounded-lg p-8">
           <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
           <p>
             To provide seamless and smart decoration booking experiences, saving time and ensuring quality service for every client.
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-lg p-8">
+        <div className=" shadow-lg rounded-lg p-8">
           <h2 className="text-2xl font-semibold mb-4">Our Vision</h2>
           <p>
             To be the leading home and ceremony decoration platform in Bangladesh, empowering local decorators and delighting clients with unforgettable experiences.
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-lg p-8">
+        <div className=" shadow-lg rounded-lg p-8">
           <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
           <ul className="list-disc list-inside space-y-2">
             <li>Professionalism & Reliability</li>
@@ -34,7 +34,7 @@ const About = () => {
           </ul>
         </div>
 
-        <div className="bg-white shadow-lg rounded-lg p-8">
+        <div className=" shadow-lg rounded-lg p-8">
           <h2 className="text-2xl font-semibold mb-4">Why Choose Us</h2>
           <p>
             With StyleDecor, you get a streamlined booking system, verified decorators, and real-time updates for your events. 
