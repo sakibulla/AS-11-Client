@@ -3,6 +3,8 @@ import Banner from '../Banner/Banner';
 import Coverage from '../../Coverage/Coverage';
 import ServiceCard from '../../../pages/ServiceCard/ServiceCard';
 import axios from 'axios';
+import { Link } from "react-router";
+
 import { 
   FaStar, 
   FaCalendarAlt, 
@@ -153,10 +155,13 @@ const Home = () => {
           </div>
 
           <div className="text-center mt-12">
-            <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-full hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-              View All Services
-              <FaArrowRight className="ml-2" />
-            </button>
+<Link
+  to="/services"
+  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-full hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+>
+  View All Services
+  <FaArrowRight className="ml-2" />
+</Link>
           </div>
         </div>
       </section>
